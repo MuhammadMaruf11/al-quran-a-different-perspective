@@ -13,20 +13,36 @@ const ContactMe = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        // এখানে তুমি API কল বা অন্য কোন মেইল সার্ভিস কল করতে পারো
-        // এখন শুধু সিম্পল স্ট্যাটাস দেখাচ্ছি
-
+    
         if (!formData.name || !formData.email || !formData.message) {
             setStatus("সব ফিল্ড পূরণ করুন");
             return;
         }
-
-        setStatus("মেসেজ সফলভাবে পাঠানো হয়েছে!");
-        setFormData({ name: "", email: "", message: "" });
+    
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/contact`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+    
+            if (response.ok) {
+                setStatus("মেসেজ সফলভাবে পাঠানো হয়েছে!");
+                setFormData({ name: "", email: "", message: "" });
+            } else {
+                const data = await response.json();
+                setStatus(data.error || "কোনো সমস্যা হয়েছে, আবার চেষ্টা করুন।");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            setStatus("সার্ভার এরর! আবার চেষ্টা করুন।");
+        }
     };
+    
 
     return (
         <div className="max-w-xl mx-auto px-4 py-10">

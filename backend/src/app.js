@@ -1,6 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const contactRoutes = require("../routes/contact");
+require('../config/database');
 
 const app = express();
 // require('../config/database');
@@ -17,7 +19,7 @@ app.get('/', (req, res) => {
 
 
 // Routes
-
+app.use("/api/contact", contactRoutes);
 
 
 module.exports = app;
