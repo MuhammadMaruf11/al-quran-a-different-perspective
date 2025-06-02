@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Light Mode Colors */
+  --color-background: oklch(0.95 0.05 240);     
+  --color-foreground: oklch(0.25 0.05 240);     
+  --color-primary: oklch(0.55 0.15 210);        
+  --color-primary-hover: oklch(0.50 0.12 210);  
+  --color-accent: oklch(0.65 0.20 160);         
+
+  /* Dark Mode Colors (override) */
+  --color-background-dark: oklch(0.15 0.06 250);  
+  --color-foreground-dark: oklch(0.95 0.05 250);  
+  --color-primary-dark: oklch(0.40 0.10 200);     
+  --color-primary-hover-dark: oklch(0.35 0.09 200); 
+  --color-accent-dark: oklch(0.45 0.15 140);      
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark body {
+  background-color: var(--color-background-dark);
+  color: var(--color-foreground-dark);
+}
+
+/* Primary button example */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-foreground);
+  transition: background-color 0.3s ease;
+}
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+/* Dark mode button */
+.dark .btn-primary {
+  background-color: var(--color-primary-dark);
+  color: var(--color-foreground-dark);
+}
+.dark .btn-primary:hover {
+  background-color: var(--color-primary-hover-dark);
+}
