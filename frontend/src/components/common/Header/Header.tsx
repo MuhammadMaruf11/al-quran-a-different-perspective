@@ -3,7 +3,7 @@ import ThemeToggle from "@/components/ThemeBtn/ThemeToggle"
 
 import { useState } from "react";
 import Link from "next/link";
-import { BookOpen, Menu } from "react-feather";
+import { BookOpen, Menu, X } from "react-feather";
 import { navbarData } from "@/data/navbarData";
 
 const Header = () => {
@@ -30,7 +30,7 @@ const Header = () => {
 
                     </div>
                 </div>
-            
+
 
                 {open && (
                     <div className="fixed top-0 left-0 bg-[color:var(--color-background)] dark:bg-[color:var(--color-background-dark)]  w-full h-full">
@@ -38,7 +38,7 @@ const Header = () => {
                             onClick={() => setOpen(!open)}
                             className="p-2 border rounded-md hover:bg-muted cursor-pointer absolute right-48 top-4"
                         >
-                            <Menu size={20} />
+                            <X size={20} />
                         </button>
                         <ul className="absolute top-1/2 left-1/2 -translate-1/2 space-y-4 text-center" onClick={() => setOpen(!open)}>
                             {navbarData?.map((item, index) => {
@@ -46,7 +46,7 @@ const Header = () => {
                                 return (
                                     <li key={index} className="text-3xl font-semibold uppercase">
                                         <Link href={url}>
-                                            {index+1}: {title}
+                                            {index + 1}: {title}
                                         </Link>
                                     </li>
                                 )

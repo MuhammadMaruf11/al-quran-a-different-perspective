@@ -1,4 +1,6 @@
 'use client'
+import API from "@/helpers/api";
+import { apiList } from "@/helpers/apiList";
 import { useState } from "react";
 
 const ContactMe = () => {
@@ -15,34 +17,27 @@ const ContactMe = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-    
+
         if (!formData.name || !formData.email || !formData.message) {
             setStatus("সব ফিল্ড পূরণ করুন");
             return;
         }
-    
+
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/contact`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
-    
-            if (response.ok) {
+            const response = await API.post(apiList.postMessage, formData);
+
+            if (response.status === 201) {
                 setStatus("মেসেজ সফলভাবে পাঠানো হয়েছে!");
                 setFormData({ name: "", email: "", message: "" });
             } else {
-                const data = await response.json();
-                setStatus(data.error || "কোনো সমস্যা হয়েছে, আবার চেষ্টা করুন।");
+                setStatus("কিছু সমস্যা হয়েছে। আবার চেষ্টা করুন।");
             }
         } catch (error) {
             console.error("Error:", error);
             setStatus("সার্ভার এরর! আবার চেষ্টা করুন।");
         }
     };
-    
+
 
     return (
         <div className="max-w-xl mx-auto px-4 py-10">
