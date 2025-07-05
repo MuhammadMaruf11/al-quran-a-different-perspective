@@ -2,7 +2,7 @@ import SingleSurah from '@/components/SingleSurah/SingleSurah';
 
 const base_url = process.env.NEXT_PUBLIC_API_BASE_URL
 
-export default async function SurahPage({ params }: { params: { id: string } }) {
+export default async function SurahPage({ params }: { params: Promise<{ id: string }> }) {
 
     const awaitedParam = await params;
 

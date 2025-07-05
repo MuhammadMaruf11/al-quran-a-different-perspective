@@ -2,7 +2,7 @@ import SubTopicsName from "@/components/QuranicTopics/SubTopicsName";
 
 const base_url = process.env.NEXT_PUBLIC_API_BASE_URL
 
-export default async function TopicPage({ params }: { params: { topicId: string } }) {
+export default async function TopicPage({ params }: { params: Promise<{ topicId: string }> }) {
 
     const awaitedParam = await params;
 

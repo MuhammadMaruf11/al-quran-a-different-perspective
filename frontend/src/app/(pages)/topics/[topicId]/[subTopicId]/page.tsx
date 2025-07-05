@@ -5,7 +5,7 @@ const base_url = process.env.NEXT_PUBLIC_API_BASE_URL
 export default async function SubTopicPage({
     params
 }: {
-    params: { topicId: string; subTopicId: string };
+    params: Promise<{ topicId: string; subTopicId: string }>;
 }) {
 
     const awaitedParam = await params;
