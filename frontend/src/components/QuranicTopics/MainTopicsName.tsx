@@ -1,31 +1,10 @@
-'use client'
-
-import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import axios from 'axios'
 import { Topic } from '@/types/topic';
 import { toBengaliNumber } from '@/helpers/toBengaliNumber';
 
-const MainTopicsName = () => {
-    const [topics, setTopics] = useState<Topic[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+const MainTopicsName = ({ topics }: { topics: Topic[] }) => {
 
-    useEffect(() => {
-        const fetchTopics = async () => {
-            try {
-                const res = await axios.get('/data/quranic-topics/topics-name.json');
-                setTopics(res.data);
-            } catch (err) {
-                console.error('Error loading topics:', err);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchTopics();
-    }, []);
-
-    if (isLoading) return <p>লোড হচ্ছে...</p>;
+    if (!topics) return <p>Data not found...</p>;
 
     return (
         <div className="max-w-6xl mx-auto py-10 px-4">

@@ -5,6 +5,6 @@ export type Ayah = {
 };
 
 export type Verses = Ayah & {
-  surah: string;
-  ayah: string;
+  surah: number;
+  ayah: number;
 };

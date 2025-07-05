@@ -1,46 +1,23 @@
-'use client'
-
-import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import axios from 'axios'
-import { Topic } from '@/types/topic';
+import { Params, TopicsData } from '@/types/topic';
 import { toBengaliNumber } from '@/helpers/toBengaliNumber';
 
 type Props = {
-    params: string | number;
+    topics: TopicsData;
+    topicId: Params["topicId"];
 };
 
-const SubTopicsName = ({ params }: Props) => {
-    const [topics, setTopics] = useState<Topic[]>([]);
-    const [title, setTitle] = useState<string>('');
-    const [isLoading, setIsLoading] = useState(true);
+const SubTopicsName = ({ topics, topicId }: Props) => {
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setIsLoading(true);
-            try {
-                const response = await axios.get(`/data/quranic-topics/topics/topic-${params}/topic-${params}.json`);
-                setTitle(response.data.title)
-                setTopics(response.data.data);
-            } catch (error) {
-                console.error("Error fetching surah:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [params]);
-
-    if (isLoading) return <>লোড হচ্ছে...</>;
+    if (!topics) return <>Data not found...</>;
 
     return (
         <div className="max-w-6xl mx-auto py-10 px-4">
-            <h1 className="text-3xl font-bold mb-12 text-center">{title}</h1>
+            <h1 className="text-3xl font-bold mb-12 text-center">{topics.title}</h1>
             <ul className="grid grid-cols-3 gap-4">
-                {topics?.map((topic) => (
+                {topics.data?.map((topic) => (
                     <li key={topic?.id} className="">
-                        <Link href={`/topics/${params}/${topic?.id}`} className="border p-4 rounded hover:bg-muted transition block text-center">
+                        <Link href={`/topics/${topicId}/${topic?.id}`} className="border p-4 rounded hover:bg-muted transition block text-center">
                             {toBengaliNumber(topic?.id)}.  {topic?.topicName}
                         </Link>
                     </li>
