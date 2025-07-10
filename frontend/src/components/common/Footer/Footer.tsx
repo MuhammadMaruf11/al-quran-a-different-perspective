@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-const  Footer = ()=>{
+const Footer = () => {
     return (
-        <footer className="mt-8 border-t border-border py-6 px-6">
+        <footer className="border-t border-border py-6 px-6">
             <div className="text-center">
                 <p className="font-semibold">Muhammad Maruf - Software Developer</p>
                 <div className="flex justify-center gap-4 mt-2">
