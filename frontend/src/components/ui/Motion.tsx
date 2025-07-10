@@ -2,9 +2,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { FC, ReactNode, useEffect, useState } from "react";
-
-const base_url = process.env.NEXT_PUBLIC_BASE_URL;
+import { FC, ReactNode } from "react";
 
 const pageVariants = {
     initial: { opacity: 0, y: -10 },
@@ -18,47 +16,17 @@ const pageTransition = {
     duration: 0.5,
 };
 
-interface RootLayoutProps {
+interface MotionProps {
     children: ReactNode;
+    apiReady: boolean;
 }
 
-const Motion: FC<RootLayoutProps> = ({ children }) => {
+const Motion: FC<MotionProps> = ({ children, apiReady }) => {
     const pathname = usePathname();
-    const [ready, setReady] = useState(false);
-    const [error, setError] = useState(false);
 
-    useEffect(() => {
-        const checkApi = async () => {
-            try {
-                const res = await fetch(base_url!, {
-                    cache: "no-store",
-                });
-
-                if (res.ok) {
-                    setReady(true);
-                } else {
-                    setError(true);
-                }
-            } catch (err) {
-                console.error("API check failed:", err);
-                setError(true);
-            }
-        };
-
-        checkApi();
-    }, []);
-
-    if (error) {
+    if (!apiReady) {
         return (
-            <div className=" text-center py-8">
-                <h2 className="text-red-500 text-6xl"> সার্ভার প্রস্তুত হচ্ছে। কিছুক্ষণ পর রিফ্রেশ করুন।</h2>
-            </div>
-        );
-    }
-
-    if (!ready) {
-        return (
-            <div className="text-center py-8 text-gray-500 animate-pulse">
+            <div className=" text-center flex h-dvh justify-center items-center">
                 <Image className="mx-auto" src='/assets/img/loader.gif' width={480} height={480} alt="Loader_gif" />
             </div>
         );
