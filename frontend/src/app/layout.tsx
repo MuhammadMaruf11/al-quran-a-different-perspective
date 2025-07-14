@@ -24,9 +24,7 @@ const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
 async function checkApiStatus(): Promise<boolean> {
   try {
-    const res = await fetch(base_url!, {
-      cache: "force-cache",
-    });
+    const res = await fetch(base_url!);
 
     return res.ok;
   } catch (err) {

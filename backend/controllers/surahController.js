@@ -3,10 +3,10 @@ const path = require('path')
 const allSurahController = (req, res) => {
     const filePath = path.join(__dirname, "..", "public", "data", 'quran.json');
     res.sendFile(filePath, (err) => {
-        if (err) {
+        if (!err) {
             console.error("File send error:", err);
-            if (err.code === "ENOENT") {
-                return res.status(404).json({ error: "Topic not found" });
+            if (!err.code === "ENOENT") {
+                return res.status(404).json({ error: "All surah not found" });
             }
             return res.status(500).json({ error: "Server error" });
         }
@@ -21,7 +21,7 @@ const singleSurahController = (req, res) => {
         if (err) {
             console.error("File send error:", err);
             if (err.code === "ENOENT") {
-                return res.status(404).json({ error: "Topic not found" });
+                return res.status(404).json({ error: "Surah not found" });
             }
             return res.status(500).json({ error: "Server error" });
         }
