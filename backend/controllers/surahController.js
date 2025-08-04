@@ -5,9 +5,6 @@ const allSurahController = (req, res) => {
     res.sendFile(filePath, (err) => {
         if (!err) {
             console.error("File send error:", err);
-            if (!err.code === "ENOENT") {
-                return res.status(404).json({ error: "All surah not found" });
-            }
             return res.status(500).json({ error: "Server error" });
         }
     });
@@ -20,9 +17,6 @@ const singleSurahController = (req, res) => {
     res.sendFile(filePath, (err) => {
         if (err) {
             console.error("File send error:", err);
-            if (err.code === "ENOENT") {
-                return res.status(404).json({ error: "Surah not found" });
-            }
             return res.status(500).json({ error: "Server error" });
         }
     });
